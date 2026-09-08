@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name = "viewport" content = "width=device-width">
+        <title>Stickman Swinging</title>
+    </head>
+    <body>
+        <canvas id="canvas" width = "500"
+                height = "500" style="border:1px solid #000;"></canvas>
+    
+    <script> "use strict"
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        
+        var angle = ((0 * Math.PI) / 180);
+        var direction = 1; //1 if forward, 0 if backward.
+    
+        function mainLoop(){
+        update();
+        draw();
+        
+        requestAnimationFrame(mainLoop);
+        }
+        
+        
+        function draw(){
+        context.clearRect(0,0, canvas.width, canvas.height);
+        
+        //drawing top rectangle (that doesn't change)
+        context.beginPath();
+        context.rect(175,55,140,20);
+        context.stroke();
+        
+        context.save();
+        context.translate(245,75);
+        context.rotate(angle);
+        
+        //drawing rest of stick figure
+        
+        //drawing swing line
+        context.beginPath();
+        context.moveTo(0,0);
+        context.lineTo(0,215);
+        context.stroke();
+
+        //drawing swing seat
+        context.beginPath();
+        context.rect(-30,215,60,22);
+        context.stroke();
+
+        //drawing stick figure upper arm
+        context.beginPath();
+        context.moveTo(17, 187);
+        context.lineTo(35,165);
+        context.stroke();
+        
+        //drawing stick figure lower arm
+        context.beginPath();
+        context.moveTo(17, 187);
+        context.lineTo(0,165);
+        context.stroke();
+
+        //drawing stick figure body
+        context.beginPath();
+        context.moveTo(20,215);
+        context.lineTo(45, 132);
+        context.stroke();
+
+        if (direction == 1){
+            //drawing stick figure legs
+            context.beginPath();
+            context.moveTo(20,215);
+            context.lineTo(-85,215);
+            context.stroke();
+
+            //drawing stick figure foot
+            context.beginPath();
+            context.moveTo(-85,215);
+            context.lineTo(-88,197);
+            context.stroke();
+                
+            //drawing eye
+            context.beginPath();
+            context.arc(32, 92, 1.5, 0, 2 * Math.PI);
+            context.lineWidth = 2;
+            context.stroke();
+            context.fill();
+        } 
+        if (direction == 0){
+            //drawing upper leg
+            context.beginPath();
+            context.moveTo(20,215);
+            context.lineTo(-40,215);
+            context.stroke();
+            
+            //drawing lower leg
+            context.beginPath();
+            context.moveTo(-40,215);
+            context.lineTo(-40,255);
+            context.stroke();
+            
+            //drawing foot
+            context.beginPath();
+            context.moveTo(-40,255);
+            context.lineTo(-55, 255);
+            context.stroke();
+            
+            //drawing eye
+            context.beginPath();
+            context.moveTo(28, 92);
+            context.lineTo(34,94);
+            context.lineWidth = 2;
+            context.stroke();
+            
+        }
+        
+        //drawing smile
+        context.beginPath();
+        context.arc(25, 110, 5, 0, 1 * Math.PI - 0.6);
+        context.lineWidth = 2;
+        context.stroke();
+        
+        //drawing stick figure hand
+        context.beginPath();
+        context.arc(0, 165, 8, 0, 2 * Math.PI);
+        context.lineWidth = 2;
+        context.stroke();
+        context.fillStyle = "white";
+        context.fill();
+
+
+        //drawing stick figure head
+        context.beginPath();
+        context.ellipse(45, 100, 30, 33, Math.PI/4, 0, 2*Math.PI);
+        context.lineWidth = 1;
+        context.stroke();
+
+        //Restoring the previously stored canvas.
+        context.restore();
+        }
+        
+        function update(){
+        var max_angle = (45*Math.PI)/180;
+        var min_angle = -(45*Math.PI)/180;
+        if (direction == 1){
+        angle += (0.5*Math.PI)/180;
+        }
+        else{
+            angle -= (0.5*Math.PI)/180;
+        }
+        
+        if (angle >= max_angle){
+            direction = 0;
+        }
+        if (angle <= min_angle){
+            direction = 1;
+        }
+        
+        }
+        
+        mainLoop();
+        
+    </script>
+
+    </body>
+
+</html>
