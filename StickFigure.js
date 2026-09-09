@@ -68,29 +68,21 @@ function StickFigure(context){
         this.context.stroke();
     }
 
-    StickFigure.prototype.drawLegsAndEyes = function(){
+    StickFigure.prototype.drawLegs = function(){
         if (this.direction == 1){
-            //drawing stick figure legs
+            //drawing legs
             this.context.beginPath();
             this.context.moveTo(20,215);
             this.context.lineTo(-85,215);
             this.context.stroke();
 
-            //drawing stick figure foot
+            //drawing foot
             this.context.beginPath();
             this.context.moveTo(-85,215);
             this.context.lineTo(-88,197);
             this.context.stroke();
-                
-            //drawing eye
-            this.context.beginPath();
-            this.context.arc(32, 92, 1.5, 0, 2 * Math.PI);
-            this.context.lineWidth = 2;
-            this.context.stroke();
-            this.context.fillStyle = "black";
-            this.context.fill();
         } 
-        if (this.direction == 0){
+        else{
             //drawing upper leg
             this.context.beginPath();
             this.context.moveTo(20,215);
@@ -109,15 +101,25 @@ function StickFigure(context){
             this.context.lineTo(-55, 255);
             this.context.stroke();
             
-            //drawing eye
+        }
+        
+    }
+
+    StickFigure.prototype.drawEyes = function(){
+        if (this.direction == 1){
+            this.context.beginPath();
+            this.context.arc(32, 92, 1.5, 0, 2 * Math.PI);
+            this.context.lineWidth = 2;
+            this.context.stroke();
+            this.context.fillStyle = "black";
+            this.context.fill();
+        } else {
             this.context.beginPath();
             this.context.moveTo(28, 92);
             this.context.lineTo(34,94);
             this.context.lineWidth = 2;
             this.context.stroke();
-            
         }
-        
     }
 
     StickFigure.prototype.draw = function(){
@@ -134,7 +136,8 @@ function StickFigure(context){
         this.drawBody();
         this.drawSmile();
         this.drawHead();
-        this.drawLegsAndEyes();
+        this.drawLegs();
+        this.drawEyes();
 
         //Restoring the previously stored canvas.
         this.context.restore();
